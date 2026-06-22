@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#f5f0e8;--bg2:#ffffff;--bg3:#f0e8d8;--border:#ddd0b8;--border2:#c0a070;--gold:#8b5e20;--gold2:#7a4e18;--text:#2a1a08;--text2:#5a3e28;--text3:#9a8060}
+:root{--bg:#f5f0e8;--bg2:#ffffff;--bg3:#f0e8d8;--border:#ddd0b8;--border2:#c0a070;--gold:#8b5e20;--text:#2a1a08;--text2:#5a3e28;--text3:#9a8060}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
 .header{background:linear-gradient(135deg,#5c1010 0%,#3d0808 60%,#4a1500 100%);border-bottom:2px solid #c9a84c;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
 .header-brand{display:flex;align-items:center;gap:14px}
@@ -58,44 +58,37 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tag-regime{background:#fef3c7;color:#92400e;border-color:#fde68a}
 .tag-grupo{background:#ede9fe;color:#5b21b6;border-color:#ddd6fe}
 .card-actions{display:flex;gap:6px;flex-shrink:0}
-.card-vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.card-vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 .val-l{font-size:11px;color:var(--text3);margin-bottom:3px;font-weight:500}
 .val-v{font-size:13px;font-weight:700;color:var(--text)}
 .val-v.gold{color:var(--gold)}.val-v.green{color:#059669}.val-v.amber{color:#b45309}
-.pix-line{margin-top:10px;font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px}
-.obs-line{margin-top:10px;font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px;line-height:1.5}
+.val-edit{display:flex;align-items:center;gap:5px;margin-top:3px}
+.val-edit input{width:110px;padding:4px 7px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);outline:none}
+.val-edit input:focus{border-color:#c9a84c}
+.val-edit button{padding:3px 8px;font-size:11px;border-radius:5px;border:1px solid #c9a84c;background:linear-gradient(135deg,#5c1010,#7a1818);color:#e8c97a;cursor:pointer;font-family:inherit;white-space:nowrap}
 
-/* ── MESES ── */
+/* MESES 2026 */
 .meses-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
-.meses-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;cursor:pointer;user-select:none}
+.meses-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
 .meses-header-left{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--text2)}
-.meses-toggle{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
-.meses-grid{display:flex;flex-wrap:wrap;gap:6px}
-.mes-chip{display:inline-flex;flex-direction:column;align-items:center;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;min-width:54px;user-select:none;position:relative}
-.mes-chip:hover{transform:translateY(-1px);box-shadow:0 3px 8px rgba(0,0,0,.12)}
-.mes-chip:active{transform:scale(.96)}
-.mes-chip .mes-nome{font-size:10px;font-weight:500;margin-bottom:2px;opacity:.8}
-.mes-chip .mes-ano{font-size:9px;opacity:.6}
-.mes-chip .mes-ico{font-size:13px;margin-bottom:1px}
-
-/* status dos chips */
+.meses-grid{display:flex;flex-wrap:wrap;gap:7px}
+.mes-chip{display:inline-flex;flex-direction:column;align-items:center;padding:7px 10px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;min-width:52px;user-select:none}
+.mes-chip:hover:not(.chip-futuro){transform:translateY(-2px);box-shadow:0 3px 10px rgba(0,0,0,.13)}
+.mes-chip:active:not(.chip-futuro){transform:scale(.96)}
+.mes-chip .mn{font-size:10px;font-weight:600;margin-bottom:1px}
+.mes-chip .mi{font-size:14px;margin-bottom:2px}
 .chip-pendente{background:#fef9f0;border-color:#f0c060;color:#92400e}
 .chip-pago{background:#d1fae5;border-color:#34d399;color:#065f46}
 .chip-vencido{background:#fee2e2;border-color:#f87171;color:#991b1b}
-.chip-futuro{background:#f3f4f6;border-color:#d1d5db;color:#9ca3af;cursor:default}
-.chip-futuro:hover{transform:none;box-shadow:none}
-.chip-atual{box-shadow:0 0 0 2px #c9a84c}
-
-.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text3)}
-.leg-dot{width:10px;height:10px;border-radius:3px}
-
-/* cobrança badge */
+.chip-futuro{background:#f3f4f6;border-color:#d1d5db;color:#c0c0c0;cursor:default}
+.chip-atual{outline:2px solid #c9a84c;outline-offset:2px}
 .cobranca-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;padding:2px 8px;border-radius:100px;background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;font-weight:600}
-
-/* MODAL */
+.debito-box{margin-top:10px;padding:10px 12px;background:#fff8f0;border:1px solid #f0c060;border-radius:8px;display:flex;align-items:flex-start;gap:8px}
+.debito-box i{color:#b45309;font-size:14px;margin-top:1px;flex-shrink:0}
+.debito-txt{font-size:12px;color:#7a4e18;line-height:1.5}
+.obs-line{margin-top:10px;font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px;line-height:1.5}
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem;backdrop-filter:blur(3px)}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.2)}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:1.5rem;width:100%;max-width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.2)}
 .modal h3{font-size:16px;font-weight:600;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .f{display:flex;flex-direction:column;gap:5px}
@@ -104,8 +97,6 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .f input:focus,.f select:focus,.f textarea:focus{border-color:#c9a84c;box-shadow:0 0 0 3px rgba(201,168,76,.1)}
 .f textarea{resize:vertical;min-height:60px}
 .modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
-
-/* RESUMO */
 .rgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
 .rc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;box-shadow:0 1px 4px rgba(0,0,0,.05)}
 .rc h4{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:7px}
@@ -176,38 +167,32 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 const DIA_VENC = 5;
+const ANO = 2026;
 const MESES_NOME = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
-let clientes = [], pagamentos = {}, tab = 'clientes', search = '', editId = null;
-const REGIMES = ['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
-const STATUS  = ['Pendente','Pago','Atrasado'];
-
-// retorna "2025-06" para Date
-function mesKey(d){ return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; }
-
-// gera últimos 12 meses até o atual
-function ultimos12(){
-  const hoje = new Date();
-  const lista = [];
-  for(let i=11; i>=0; i--){
-    const d = new Date(hoje.getFullYear(), hoje.getMonth()-i, 1);
-    lista.push({ key: mesKey(d), nome: MESES_NOME[d.getMonth()], ano: d.getFullYear(), mes: d.getMonth(), ano4: d.getFullYear() });
-  }
-  return lista;
+// Gera todos os 12 meses de 2026
+function meses2026(){
+  return MESES_NOME.map((nome,i)=>({
+    key: `${ANO}-${String(i+1).padStart(2,'0')}`,
+    nome, idx: i
+  }));
 }
 
-function statusMes(clienteId, mesInfo){
+let clientes=[], pagamentos={}, tab='clientes', search='', editId=null;
+const REGIMES=['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
+
+function mesAtualKey(){
+  const h=new Date();
+  return `${h.getFullYear()}-${String(h.getMonth()+1).padStart(2,'0')}`;
+}
+
+function statusMes(clienteId, m){
   const hoje = new Date();
-  const atualKey = mesKey(hoje);
-  const pag = (pagamentos[clienteId]||[]).find(p => p.mes === mesInfo.key);
-  if(pag) return pag.status; // 'Pago'
-  // futuro
-  if(mesInfo.key > atualKey) return 'futuro';
-  // mes atual: vencido só após dia 5
-  if(mesInfo.key === atualKey){
-    return hoje.getDate() > DIA_VENC ? 'vencido' : 'pendente';
-  }
-  // meses passados sem pagamento = vencido
+  const atualKey = mesAtualKey();
+  const pag = (pagamentos[clienteId]||[]).find(p=>p.mes===m.key);
+  if(pag && pag.status==='Pago') return 'pago';
+  if(m.key > atualKey) return 'futuro';
+  if(m.key === atualKey) return hoje.getDate() > DIA_VENC ? 'vencido' : 'pendente';
   return 'vencido';
 }
 
@@ -223,64 +208,65 @@ function syncBadge(s){const b=document.getElementById('badge-sync'),t=document.g
 async function loadData(){
   syncBadge('loading');
   try{
-    const rc = await fetch('/api/clientes').then(r=>r.json());
-    clientes = Array.isArray(rc) ? rc : [];
+    const rc=await fetch('/api/clientes').then(r=>r.json());
+    clientes=Array.isArray(rc)?rc:[];
     syncBadge('ok');
-  }catch(e){
-    console.error('Erro clientes:',e);
-    syncBadge('err');toast('Erro ao carregar clientes',false);
-    render();return;
-  }
+  }catch{syncBadge('err');toast('Erro ao carregar clientes',false);render();return;}
   try{
-    const rp = await fetch('/api/pagamentos').then(r=>r.json());
-    pagamentos = {};
+    const rp=await fetch('/api/pagamentos').then(r=>r.json());
+    pagamentos={};
     if(Array.isArray(rp)) rp.forEach(p=>{
-      if(!pagamentos[p.cliente_id]) pagamentos[p.cliente_id]=[];
+      if(!pagamentos[p.cliente_id])pagamentos[p.cliente_id]=[];
       pagamentos[p.cliente_id].push(p);
     });
-  }catch(e){
-    console.error('Erro pagamentos:',e);
-    pagamentos = {};
-  }
+  }catch(e){console.warn('pagamentos:',e);pagamentos={};}
   render();
 }
 
-async function apiPost(url,b){const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return r.json();}
-async function apiPut(b){const r=await fetch('/api/clientes',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return r.json();}
-async function apiDelete(id){await fetch('/api/clientes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});}
+async function apiCall(url,method,body){
+  const r=await fetch(url,{method,headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
 
-async function toggleMes(clienteId, mesKey, statusAtual){
-  // ciclo: vencido/pendente → Pago → volta (deleta)
-  if(statusAtual === 'futuro') return;
+async function toggleMes(clienteId, mesKey, isPago){
   syncBadge('loading');
   try{
-    if(statusAtual === 'pago'){
-      // remove pagamento (volta a pendente/vencido)
-      await fetch('/api/pagamentos',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({cliente_id:clienteId,mes:mesKey})});
-      if(!pagamentos[clienteId]) pagamentos[clienteId]=[];
-      pagamentos[clienteId] = pagamentos[clienteId].filter(p=>p.mes!==mesKey);
-    } else {
-      // marca como pago
-      await apiPost('/api/pagamentos',{cliente_id:clienteId,mes:mesKey,status:'Pago'});
-      if(!pagamentos[clienteId]) pagamentos[clienteId]=[];
-      pagamentos[clienteId] = pagamentos[clienteId].filter(p=>p.mes!==mesKey);
+    if(isPago){
+      await apiCall('/api/pagamentos','DELETE',{cliente_id:clienteId,mes:mesKey});
+      pagamentos[clienteId]=(pagamentos[clienteId]||[]).filter(p=>p.mes!==mesKey);
+    }else{
+      await apiCall('/api/pagamentos','POST',{cliente_id:clienteId,mes:mesKey,status:'Pago'});
+      if(!pagamentos[clienteId])pagamentos[clienteId]=[];
+      pagamentos[clienteId]=pagamentos[clienteId].filter(p=>p.mes!==mesKey);
       pagamentos[clienteId].push({cliente_id:clienteId,mes:mesKey,status:'Pago'});
     }
-    syncBadge('ok');
-    render();
-  }catch{syncBadge('err');toast('Erro ao salvar',false);}
+    syncBadge('ok');render();
+  }catch{syncBadge('err');toast('Erro ao salvar pagamento',false);}
+}
+
+async function salvarValor(clienteId, novoHon, novoApice){
+  const c=clientes.find(x=>x.id===clienteId);
+  if(!c)return;
+  syncBadge('loading');
+  try{
+    const updated={...c};
+    if(novoHon!==null) updated.honorario=novoHon;
+    if(novoApice!==null) updated.apice=novoApice;
+    await apiCall('/api/clientes','PUT',updated);
+    Object.assign(c,updated);
+    syncBadge('ok');toast('Valor atualizado!');render();
+  }catch{syncBadge('err');toast('Erro ao atualizar valor',false);}
 }
 
 function renderMetrics(){
-  const hoje = new Date();
-  const mesAtual = mesKey(hoje);
+  const atualKey=mesAtualKey();
+  const lista=meses2026();
+  const mesObj=lista.find(m=>m.key===atualKey)||lista[lista.length-1];
   let tm=0,ta=0,pagos=0,pend=0,venc=0;
   clientes.forEach(c=>{
     tm+=total(c);ta+=(parseFloat(c.apice)||0);
-    const st = statusMes(c.id, {key:mesAtual, mes:hoje.getMonth(), ano4:hoje.getFullYear()});
-    if(st==='pago'||st==='Pago') pagos++;
-    else if(st==='vencido') venc++;
-    else pend++;
+    const st=statusMes(c.id,mesObj);
+    if(st==='pago')pagos++;else if(st==='vencido')venc++;else pend++;
   });
   document.getElementById('metrics').innerHTML=`
     <div class="mc"><div class="mc-l">Total mensal</div><div class="mc-v gold">${fmt(tm)}</div></div>
@@ -292,47 +278,37 @@ function renderMetrics(){
 }
 
 function renderMeses(c){
-  const lista = ultimos12();
-  const hoje = new Date();
-  const atualKey = mesKey(hoje);
-  let vencidos = 0;
-
-  const chips = lista.map(m=>{
-    const st = statusMes(c.id, m);
-    const isAtual = m.key === atualKey;
-    if(st==='vencido') vencidos++;
-    const cls = st==='pago'||st==='Pago' ? 'chip-pago' : st==='vencido' ? 'chip-vencido' : st==='futuro' ? 'chip-futuro' : 'chip-pendente';
-    const ico = st==='pago'||st==='Pago' ? 'ti-check' : st==='vencido' ? 'ti-alert-circle' : st==='futuro' ? 'ti-clock' : 'ti-circle';
-    const title = st==='pago'||st==='Pago' ? 'Pago — clique para desfazer' : st==='vencido' ? 'Vencido — clique para marcar como pago' : st==='futuro' ? 'Mês futuro' : 'Pendente — clique para marcar como pago';
-    const onclick = st!=='futuro' ? `toggleMes('${c.id}','${m.key}','${(st==='pago'||st==='Pago')?'pago':'pendente'}')` : '';
+  const lista=meses2026();
+  const atualKey=mesAtualKey();
+  let vencidos=0;
+  const chips=lista.map(m=>{
+    const st=statusMes(c.id,m);
+    const isAtual=m.key===atualKey;
+    const isPago=st==='pago';
+    if(st==='vencido')vencidos++;
+    const cls=isPago?'chip-pago':st==='vencido'?'chip-vencido':st==='futuro'?'chip-futuro':'chip-pendente';
+    const ico=isPago?'ti-check':st==='vencido'?'ti-alert-circle':st==='futuro'?'ti-lock':'ti-clock';
+    const title=isPago?'Pago — clique para desfazer':st==='vencido'?'Vencido — clique para marcar como pago':st==='futuro'?'Mês futuro':'Pendente — clique para marcar como pago';
+    const onclick=st!=='futuro'?`toggleMes('${c.id}','${m.key}',${isPago})`:'';
     return `<div class="mes-chip ${cls}${isAtual?' chip-atual':''}" onclick="${onclick}" title="${title}">
-      <i class="ti ${ico} mes-ico"></i>
-      <span class="mes-nome">${m.nome}</span>
-      <span class="mes-ano">${m.ano}</span>
+      <i class="ti ${ico} mi"></i>
+      <span class="mn">${m.nome}</span>
     </div>`;
   }).join('');
 
-  const vencBadge = vencidos > 0 ? `<span class="cobranca-badge"><i class="ti ti-alert-triangle" style="font-size:12px"></i> ${vencidos} vencido${vencidos>1?'s':''}</span>` : '';
+  const vencBadge=vencidos>0?`<span class="cobranca-badge"><i class="ti ti-alert-triangle" style="font-size:11px"></i> ${vencidos} vencido${vencidos>1?'s':''}</span>`:'';
+  const debitoBox=c.debito?`<div class="debito-box"><i class="ti ti-alert-circle"></i><div class="debito-txt"><strong>Débito anterior:</strong> ${c.debito}</div></div>`:'';
 
   return `<div class="meses-section">
     <div class="meses-header">
       <div class="meses-header-left">
         <i class="ti ti-calendar-month" style="color:var(--gold);font-size:14px"></i>
-        Controle de pagamentos ${vencBadge}
-      </div>
-      <div class="meses-toggle" style="font-size:11px;color:var(--text3)">
-        <i class="ti ti-info-circle" style="font-size:12px"></i> Clique no mês para marcar como pago
+        <strong>2026</strong> — Clique no mês para marcar como pago ${vencBadge}
       </div>
     </div>
     <div class="meses-grid">${chips}</div>
+    ${debitoBox}
   </div>`;
-}
-
-function renderClientes(){
-  const fil=clientes.filter(c=>{if(!search)return true;const q=search.toLowerCase();return(c.nome||'').toLowerCase().includes(q)||(c.razao||'').toLowerCase().includes(q)||(c.grupo||'').toLowerCase().includes(q);});
-  const gr=grupos(fil);const keys=Object.keys(gr);
-  if(keys.length===0)return`<div class="empty"><i class="ti ti-users"></i><p>Nenhum cliente cadastrado ainda.</p><button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Adicionar primeiro cliente</button></div>`;
-  return keys.map(g=>`<div class="group-block"><div class="group-title"><i class="ti ti-building" style="font-size:12px;color:var(--gold)"></i>${g} <span style="opacity:.5;font-weight:400">(${gr[g].length})</span></div>${gr[g].map(c=>renderCard(c)).join('')}</div>`).join('');
 }
 
 function renderCard(c){
@@ -354,15 +330,47 @@ function renderCard(c){
       </div>
     </div>
     <div class="card-vals">
-      <div><div class="val-l">Honorário</div><div class="val-v gold">${fmt(c.honorario)}</div></div>
-      ${c.apice?`<div><div class="val-l">Cons. Ápice</div><div class="val-v amber">${fmt(c.apice)}</div></div>`:''}
+      <div>
+        <div class="val-l">Honorário mensal</div>
+        <div class="val-v gold">${fmt(c.honorario)}</div>
+        <div class="val-edit">
+          <input type="number" id="hon_${c.id}" placeholder="Novo valor" step="0.01" min="0">
+          <button onclick="salvarValorBtn('${c.id}')"><i class="ti ti-check" style="font-size:11px"></i> Alterar</button>
+        </div>
+      </div>
+      ${c.apice?`<div>
+        <div class="val-l">Cons. Ápice</div>
+        <div class="val-v amber">${fmt(c.apice)}</div>
+        <div class="val-edit">
+          <input type="number" id="ap_${c.id}" placeholder="Novo valor" step="0.01" min="0">
+          <button onclick="salvarApiceBtn('${c.id}')"><i class="ti ti-check" style="font-size:11px"></i> Alterar</button>
+        </div>
+      </div>`:''}
       <div><div class="val-l">Total mensal</div><div class="val-v green">${fmt(t)}</div></div>
       ${d>0?`<div><div class="val-l">13° (mensal)</div><div class="val-v">${fmt(d)}</div></div>`:''}
       ${c.pix?`<div><div class="val-l">Chave PIX</div><div class="val-v" style="font-size:12px;font-weight:500">${c.pix}</div></div>`:''}
     </div>
     ${renderMeses(c)}
-    ${c.obs?`<div class="obs-line">${c.obs}</div>`:''}
+    ${c.obs?`<div class="obs-line"><i class="ti ti-notes" style="font-size:12px;color:var(--gold)"></i> ${c.obs}</div>`:''}
   </div>`;
+}
+
+function salvarValorBtn(id){
+  const v=document.getElementById('hon_'+id)?.value;
+  if(!v){toast('Digite o novo valor do honorário',false);return;}
+  salvarValor(id,parseFloat(v),null);
+}
+function salvarApiceBtn(id){
+  const v=document.getElementById('ap_'+id)?.value;
+  if(!v){toast('Digite o novo valor da Consultoria Ápice',false);return;}
+  salvarValor(id,null,parseFloat(v));
+}
+
+function renderClientes(){
+  const fil=clientes.filter(c=>{if(!search)return true;const q=search.toLowerCase();return(c.nome||'').toLowerCase().includes(q)||(c.razao||'').toLowerCase().includes(q)||(c.grupo||'').toLowerCase().includes(q);});
+  const gr=grupos(fil);const keys=Object.keys(gr);
+  if(keys.length===0)return`<div class="empty"><i class="ti ti-users"></i><p>Nenhum cliente cadastrado ainda.</p><button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Adicionar primeiro cliente</button></div>`;
+  return keys.map(g=>`<div class="group-block"><div class="group-title"><i class="ti ti-building" style="font-size:12px;color:var(--gold)"></i>${g} <span style="opacity:.5;font-weight:400">(${gr[g].length})</span></div>${gr[g].map(c=>renderCard(c)).join('')}</div>`).join('');
 }
 
 function renderResumo(){
@@ -370,15 +378,18 @@ function renderResumo(){
   const tAp=clientes.reduce((s,c)=>s+(parseFloat(c.apice)||0),0);
   const tDec=clientes.reduce((s,c)=>s+dec(c),0);
   const byReg={};const byGrp=grupos(clientes);
-  const hoje=new Date();const mesAtual=mesKey(hoje);
+  const atualKey=mesAtualKey();
+  const lista=meses2026();
+  const mesObj=lista.find(m=>m.key===atualKey)||lista[lista.length-1];
   let recebido=0,aReceber=0,vencidoVal=0;
   clientes.forEach(c=>{
-    const st=statusMes(c.id,{key:mesAtual,mes:hoje.getMonth(),ano4:hoje.getFullYear()});
+    const st=statusMes(c.id,mesObj);
     const rg=c.regime||'Sem regime';byReg[rg]=(byReg[rg]||0)+(parseFloat(c.honorario)||0);
-    if(st==='pago'||st==='Pago') recebido+=total(c);
-    else if(st==='vencido') vencidoVal+=total(c);
+    if(st==='pago')recebido+=total(c);
+    else if(st==='vencido')vencidoVal+=total(c);
     else aReceber+=total(c);
   });
+  const comDebito=clientes.filter(c=>c.debito&&c.debito.trim()).length;
   return`
   <div class="rgrid">
     <div class="rc"><h4><i class="ti ti-calculator"></i> Totais mensais</h4>
@@ -395,6 +406,7 @@ function renderResumo(){
     <div class="rr"><span><span class="tag" style="background:#d1fae5;color:#065f46;border-color:#a7f3d0">Recebido</span></span><span style="color:#059669;font-weight:700">${fmt(recebido)}</span></div>
     <div class="rr"><span><span class="tag" style="background:#fef3c7;color:#92400e;border-color:#fde68a">A receber</span></span><span style="color:#b45309;font-weight:700">${fmt(aReceber)}</span></div>
     <div class="rr"><span><span class="tag" style="background:#fee2e2;color:#991b1b;border-color:#fca5a5">Vencido</span></span><span style="color:#dc2626;font-weight:700">${fmt(vencidoVal)}</span></div>
+    ${comDebito>0?`<div class="rr"><span><span class="tag" style="background:#fef3c7;color:#92400e;border-color:#fde68a">Com débito anterior</span></span><span style="color:#b45309;font-weight:700">${comDebito} cliente${comDebito>1?'s':''}</span></div>`:''}
   </div>
   <div class="rgrid">
     <div class="rc"><h4><i class="ti ti-building-community"></i> Por grupo</h4>
@@ -418,21 +430,47 @@ function setTab(t){tab=t;document.getElementById('tab-clientes').className='tab'
 function openModal(id){
   editId=id;const c=id?clientes.find(x=>x.id===id)||{}:{};const isEdit=!!id;
   const gList=[...new Set(clientes.map(x=>x.grupo).filter(Boolean))];
-  document.getElementById('modal').innerHTML=`<h3><i class="ti ti-${isEdit?'edit':'user-plus'}"></i> ${isEdit?'Editar cliente':'Novo cliente'}</h3><div class="fg"><div class="f"><label>Nome do cliente *</label><input id="f_nome" type="text" value="${c.nome||''}" placeholder="Ex: João Silva"></div><div class="f"><label>Razão social / empresa *</label><input id="f_razao" type="text" value="${c.razao||''}" placeholder="Ex: Silva LTDA"></div><div class="f"><label>Grupo / holding</label><input id="f_grupo" type="text" value="${c.grupo||''}" placeholder="Ex: Grupo Silva" list="glist"><datalist id="glist">${gList.map(g=>`<option value="${g}">`).join('')}</datalist></div><div class="f"><label>Regime tributário</label><select id="f_reg"><option value="">Selecione</option>${REGIMES.map(r=>`<option${c.regime===r?' selected':''}>${r}</option>`).join('')}</select></div><div class="f"><label>Honorário mensal (R$)</label><input id="f_hon" type="number" step="0.01" min="0" value="${c.honorario||''}" placeholder="0,00"></div><div class="f"><label>Consultoria Ápice (R$)</label><input id="f_ap" type="number" step="0.01" min="0" value="${c.apice||''}" placeholder="0,00"></div><div class="f"><label>Paga 13°?</label><select id="f_dec"><option value="Não"${c.decimo!=='Sim'?' selected':''}>Não</option><option value="Sim"${c.decimo==='Sim'?' selected':''}>Sim</option></select></div><div class="f"><label>Status pagamento atual</label><select id="f_st"><option>Pendente</option><option${c.status==='Pago'?' selected':''}>Pago</option><option${c.status==='Atrasado'?' selected':''}>Atrasado</option></select></div><div class="f" style="grid-column:1/-1"><label>Chave PIX</label><input id="f_pix" type="text" value="${c.pix||''}" placeholder="CPF, CNPJ, e-mail, telefone ou chave aleatória"></div><div class="f" style="grid-column:1/-1"><label>Observações</label><textarea id="f_obs">${c.obs||''}</textarea></div></div><div class="modal-footer"><button class="btn" onclick="closeModal()">Cancelar</button><button class="btn btn-primary" onclick="salvar()"><i class="ti ti-device-floppy"></i> ${isEdit?'Salvar alterações':'Cadastrar cliente'}</button></div>`;
+  document.getElementById('modal').innerHTML=`
+    <h3><i class="ti ti-${isEdit?'edit':'user-plus'}"></i> ${isEdit?'Editar cliente':'Novo cliente'}</h3>
+    <div class="fg">
+      <div class="f"><label>Nome do cliente *</label><input id="f_nome" type="text" value="${c.nome||''}" placeholder="Ex: João Silva"></div>
+      <div class="f"><label>Razão social / empresa *</label><input id="f_razao" type="text" value="${c.razao||''}" placeholder="Ex: Silva LTDA"></div>
+      <div class="f"><label>Grupo / holding</label><input id="f_grupo" type="text" value="${c.grupo||''}" placeholder="Ex: Grupo Silva" list="glist"><datalist id="glist">${gList.map(g=>`<option value="${g}">`).join('')}</datalist></div>
+      <div class="f"><label>Regime tributário</label><select id="f_reg"><option value="">Selecione</option>${REGIMES.map(r=>`<option${c.regime===r?' selected':''}>${r}</option>`).join('')}</select></div>
+      <div class="f"><label>Honorário mensal (R$)</label><input id="f_hon" type="number" step="0.01" min="0" value="${c.honorario||''}" placeholder="0,00"></div>
+      <div class="f"><label>Consultoria Ápice (R$)</label><input id="f_ap" type="number" step="0.01" min="0" value="${c.apice||''}" placeholder="0,00"></div>
+      <div class="f"><label>Paga 13°?</label><select id="f_dec"><option value="Não"${c.decimo!=='Sim'?' selected':''}>Não</option><option value="Sim"${c.decimo==='Sim'?' selected':''}>Sim</option></select></div>
+      <div class="f"><label>Chave PIX</label><input id="f_pix" type="text" value="${c.pix||''}" placeholder="CPF, CNPJ, e-mail ou telefone"></div>
+      <div class="f" style="grid-column:1/-1"><label>Débito anterior <span style="font-weight:400;text-transform:none">(honorários em aberto de períodos anteriores)</span></label><textarea id="f_debito" placeholder="Ex: Deve 3 meses de 2025 — total R$ 1.500,00">${c.debito||''}</textarea></div>
+      <div class="f" style="grid-column:1/-1"><label>Observações gerais</label><textarea id="f_obs" placeholder="Informações adicionais sobre este cliente...">${c.obs||''}</textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvar()"><i class="ti ti-device-floppy"></i> ${isEdit?'Salvar alterações':'Cadastrar cliente'}</button>
+    </div>`;
   document.getElementById('overlay').style.display='flex';
   document.getElementById('f_nome').focus();
 }
+
 function closeModal(){document.getElementById('overlay').style.display='none';editId=null;}
 
 async function salvar(){
   const nome=(document.getElementById('f_nome').value||'').trim();
   const razao=(document.getElementById('f_razao').value||'').trim();
   if(!nome||!razao){alert('Preencha o nome e a razão social.');return;}
-  const d={nome,razao,grupo:document.getElementById('f_grupo').value.trim(),regime:document.getElementById('f_reg').value,honorario:document.getElementById('f_hon').value||null,apice:document.getElementById('f_ap').value||null,decimo:document.getElementById('f_dec').value,status:document.getElementById('f_st').value,pix:document.getElementById('f_pix').value.trim(),obs:document.getElementById('f_obs').value.trim()};
+  const d={nome,razao,
+    grupo:document.getElementById('f_grupo').value.trim(),
+    regime:document.getElementById('f_reg').value,
+    honorario:document.getElementById('f_hon').value||null,
+    apice:document.getElementById('f_ap').value||null,
+    decimo:document.getElementById('f_dec').value,
+    pix:document.getElementById('f_pix').value.trim(),
+    debito:document.getElementById('f_debito').value.trim(),
+    obs:document.getElementById('f_obs').value.trim()};
   syncBadge('loading');
   try{
-    if(editId){await apiPut({id:editId,...d});toast('Cliente atualizado!');}
-    else{await apiPost('/api/clientes',d);toast('Cliente cadastrado!');}
+    if(editId){await apiCall('/api/clientes','PUT',{id:editId,...d});toast('Cliente atualizado!');}
+    else{await apiCall('/api/clientes','POST',d);toast('Cliente cadastrado!');}
     closeModal();await loadData();
   }catch{syncBadge('err');toast('Erro ao salvar',false);}
 }
@@ -440,8 +478,10 @@ async function salvar(){
 async function excluir(id,nome){
   if(!confirm(`Excluir "${nome}"?`))return;
   syncBadge('loading');
-  try{await apiDelete(id);toast('Cliente excluído');await loadData();}
-  catch{syncBadge('err');toast('Erro ao excluir',false);}
+  try{
+    await fetch('/api/clientes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
+    toast('Cliente excluído');await loadData();
+  }catch{syncBadge('err');toast('Erro ao excluir',false);}
 }
 
 loadData();
