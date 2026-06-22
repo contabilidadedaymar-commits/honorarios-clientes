@@ -3,93 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Honorários</title>
+<title>Controle de Honorários – Contabilidade Daymar</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e;min-height:100vh}
-.header{background:#1F3864;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.header h1{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px}
+:root{
+  --bg:#1a0a0a;
+  --bg2:#2a1010;
+  --bg3:#3a1818;
+  --border:#5a2a2a;
+  --border2:#7a3a3a;
+  --gold:#c9a84c;
+  --gold2:#e8c97a;
+  --gold3:#f5e0a0;
+  --text:#f0e6d0;
+  --text2:#c8b090;
+  --text3:#8a6a50;
+  --red-badge:#ef4444;
+}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+
+/* HEADER */
+.header{background:linear-gradient(135deg,#2d0a0a 0%,#1a0505 60%,#2d1000 100%);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;gap:12px;flex-wrap:wrap}
+.header-brand{display:flex;align-items:center;gap:14px}
+.logo-box{width:40px;height:40px;border:1.5px solid var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;background:rgba(201,168,76,.1)}
+.logo-box i{font-size:20px;color:var(--gold)}
+.brand-name{font-size:17px;font-weight:700;color:var(--gold2);letter-spacing:.02em}
+.brand-sub{font-size:11px;color:var(--text3);margin-top:1px;letter-spacing:.03em}
 .header-right{display:flex;align-items:center;gap:10px}
-.badge-sync{font-size:12px;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.15);display:flex;align-items:center;gap:5px}
-.badge-sync.ok{background:rgba(29,158,117,.3)}
-.badge-sync.err{background:rgba(220,53,69,.3)}
-.container{max-width:1100px;margin:0 auto;padding:20px 16px}
-.tabs{display:flex;gap:4px;background:#fff;border:1px solid #dde3ee;border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
-.tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#666;transition:all .15s}
-.tab.on{background:#1F3864;color:#fff}
-.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
-.mc{background:#fff;border:1px solid #dde3ee;border-radius:10px;padding:14px 16px}
-.mc-l{font-size:11px;color:#888;margin-bottom:5px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
-.mc-v{font-size:22px;font-weight:600}
-.blue{color:#185FA5}.green{color:#1D9E75}.amber{color:#BA7517}.red{color:#c0392b}
-.section-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
-.section-bar h2{font-size:15px;font-weight:600}
-.btn{padding:8px 15px;border-radius:8px;border:1px solid #ccd0da;background:#fff;color:#333;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
-.btn:hover{background:#f0f2f7;border-color:#aab0be}
-.btn-primary{background:#1F3864;color:#fff;border-color:#1F3864}
-.btn-primary:hover{background:#162a4e}
-.btn-danger{color:#c0392b;border-color:#f5c0c0}
-.btn-danger:hover{background:#fff0f0}
+.badge-sync{font-size:12px;padding:5px 12px;border-radius:100px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;gap:6px;color:var(--text3)}
+.badge-sync.ok{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:#34d399}
+.badge-sync.err{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.3);color:#f87171}
+
+/* CONTAINER */
+.container{max-width:1120px;margin:0 auto;padding:24px 16px;flex:1}
+
+/* METRICS */
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin-bottom:24px}
+.mc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;position:relative;overflow:hidden}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.mc.c-green::before{background:linear-gradient(90deg,#10b981,#34d399)}
+.mc.c-red::before{background:linear-gradient(90deg,#ef4444,#f87171)}
+.mc.c-gray::before{background:linear-gradient(90deg,#6b5a3a,#9a8060)}
+.mc-l{font-size:11px;color:var(--text3);margin-bottom:6px;font-weight:500;text-transform:uppercase;letter-spacing:.05em}
+.mc-v{font-size:22px;font-weight:700;color:var(--text)}
+.mc-v.gold{color:var(--gold2)}
+.mc-v.green{color:#34d399}
+.mc-v.red{color:#f87171}
+
+/* TOOLBAR */
+.toolbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.tabs{display:flex;gap:2px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:3px}
+.tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:var(--text3);transition:all .15s;font-family:inherit}
+.tab.on{background:var(--bg3);color:var(--gold2);border:1px solid var(--border2)}
+.tab:hover:not(.on){color:var(--text2)}
+
+/* BUTTONS */
+.btn{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--bg2);color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
+.btn:hover{background:var(--bg3);border-color:var(--border2)}
+.btn-primary{background:linear-gradient(135deg,#8b1a1a,#a52020);color:var(--gold2);border-color:var(--gold);border-width:1px}
+.btn-primary:hover{background:linear-gradient(135deg,#a52020,#c02828)}
+.btn-danger{color:#f87171;border-color:#5a1a1a}
+.btn-danger:hover{background:#2d1010}
 .btn-sm{padding:5px 10px;font-size:12px}
-.search-bar{margin-bottom:14px}
-.search-bar input{width:100%;max-width:420px;padding:8px 12px;border:1px solid #dde3ee;border-radius:8px;font-size:13px;background:#fff;font-family:inherit}
-.group-block{margin-bottom:1.5rem}
-.group-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #eaecf2;display:flex;align-items:center;gap:5px}
-.card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:14px 16px;margin-bottom:10px;transition:box-shadow .15s}
-.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.07)}
+
+/* SEARCH */
+.search-wrap{margin-bottom:14px}
+.search-wrap input{width:100%;max-width:420px;padding:9px 14px;border:1px solid var(--border);border-radius:9px;font-size:13px;background:var(--bg2);color:var(--text);font-family:inherit;outline:none;transition:border-color .15s}
+.search-wrap input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.search-wrap input::placeholder{color:var(--text3)}
+
+/* CARDS */
+.group-block{margin-bottom:1.75rem}
+.group-title{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:6px}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:10px;transition:border-color .15s,box-shadow .15s}
+.card:hover{border-color:var(--border2);box-shadow:0 4px 20px rgba(0,0,0,.4)}
 .card-head{display:flex;align-items:flex-start;gap:12px}
-.avatar{width:40px;height:40px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#1e40af;flex-shrink:0}
+.avatar{width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg,#6b1a1a,#a52020);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--gold2);flex-shrink:0}
 .card-info{flex:1;min-width:0}
-.card-nome{font-size:14px;font-weight:600;margin-bottom:2px}
-.card-razao{font-size:12px;color:#666;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-nome{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.card-razao{font-size:12px;color:var(--text3);margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tags{display:flex;flex-wrap:wrap;gap:5px}
-.tag{font-size:11px;padding:2px 8px;border-radius:100px;background:#f0f2f7;color:#555;border:1px solid #dde3ee}
-.tag-regime{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
-.tag-grupo{background:#ede9fe;color:#5b21b6;border-color:#ddd6fe}
-.tag-pago{background:#d1fae5;color:#065f46}
-.tag-pendente{background:#fef3c7;color:#92400e}
-.tag-atrasado{background:#fee2e2;color:#991b1b}
+.tag{font-size:11px;padding:2px 8px;border-radius:100px;background:var(--bg);color:var(--text3);border:1px solid var(--border)}
+.tag-regime{background:rgba(201,168,76,.1);color:var(--gold2);border-color:rgba(201,168,76,.3)}
+.tag-grupo{background:rgba(180,120,60,.1);color:#d4924a;border-color:rgba(180,120,60,.3)}
+.tag-pago{background:rgba(16,185,129,.1);color:#34d399;border-color:rgba(16,185,129,.3)}
+.tag-pendente{background:rgba(245,158,11,.1);color:#fbbf24;border-color:rgba(245,158,11,.3)}
+.tag-atrasado{background:rgba(239,68,68,.1);color:#f87171;border-color:rgba(239,68,68,.3)}
 .card-actions{display:flex;gap:6px;flex-shrink:0}
-.card-vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f2f7}
-.val-l{font-size:11px;color:#999;margin-bottom:2px}
-.val-v{font-size:13px;font-weight:600}
-.pix-line{margin-top:8px;font-size:12px;color:#666;display:flex;align-items:center;gap:5px}
-.obs-line{margin-top:8px;font-size:12px;color:#888;border-top:1px solid #f0f2f7;padding-top:8px}
-.empty{text-align:center;padding:3rem 1rem;color:#aaa}
-.empty i{font-size:36px;display:block;margin-bottom:10px;opacity:.4}
-/* Modal */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
-.modal{background:#fff;border-radius:14px;padding:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18)}
-.modal h3{font-size:16px;font-weight:600;margin-bottom:1.25rem}
+.card-vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.val-l{font-size:11px;color:var(--text3);margin-bottom:3px;font-weight:500}
+.val-v{font-size:13px;font-weight:700;color:var(--text)}
+.val-v.gold{color:var(--gold2)}
+.val-v.green{color:#34d399}
+.val-v.amber{color:#fbbf24}
+.pix-line{margin-top:10px;font-size:12px;color:var(--text3);display:flex;align-items:center;gap:6px}
+.obs-line{margin-top:10px;font-size:12px;color:var(--text3);border-top:1px solid var(--border);padding-top:10px;line-height:1.5}
+.empty{text-align:center;padding:4rem 1rem;color:var(--text3)}
+.empty i{font-size:40px;display:block;margin-bottom:12px;opacity:.3}
+.empty p{margin-bottom:1.5rem;font-size:14px}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem;backdrop-filter:blur(4px)}
+.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.modal h3{font-size:16px;font-weight:600;color:var(--gold2);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
 .fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .f{display:flex;flex-direction:column;gap:5px}
-.f label{font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
-.f input,.f select,.f textarea{padding:8px 10px;border:1px solid #dde3ee;border-radius:8px;font-size:13px;font-family:inherit;color:#1a1a2e;background:#fff}
-.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+.f label{font-size:11px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.f input,.f select,.f textarea{padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;color:var(--text);background:var(--bg);outline:none;transition:border-color .15s}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.1)}
+.f select option{background:var(--bg2);color:var(--text)}
 .f textarea{resize:vertical;min-height:60px}
-.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid #eee}
-/* Resumo */
-.resumo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
-.rc{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:14px 16px}
-.rc h4{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#444}
-.rr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f4f5f7;font-size:13px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)}
+
+/* RESUMO */
+.rgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.rc{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.rc h4{font-size:13px;font-weight:600;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.rc h4 i{color:var(--gold)}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:13px;color:var(--text2)}
 .rr:last-child{border:none}
-.rr strong{font-weight:600}
-.reg-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:8px}
-.reg-chip{background:#f4f6f9;border-radius:8px;padding:8px 12px}
-.reg-chip-l{font-size:11px;color:#888;margin-bottom:3px}
-.reg-chip-v{font-size:13px;font-weight:600}
-/* Toast */
-.toast{position:fixed;bottom:20px;right:20px;background:#1F3864;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s}
+.rr strong{font-weight:700;color:var(--text)}
+.reg-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;margin-top:8px}
+.reg-chip{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px}
+.reg-chip-l{font-size:11px;color:var(--text3);margin-bottom:3px}
+.reg-chip-v{font-size:13px;font-weight:700;color:var(--gold2)}
+
+/* FOOTER */
+.footer{background:linear-gradient(135deg,#2d0a0a,#1a0505);border-top:1px solid var(--border);padding:18px 24px;text-align:center}
+.footer-contact{display:flex;justify-content:center;flex-wrap:wrap;gap:20px;margin-bottom:8px}
+.footer-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text3)}
+.footer-item i{color:var(--gold);font-size:14px}
+.footer-brand{font-size:11px;color:var(--text3);opacity:.6}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;right:24px;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none;border:1px solid}
 .toast.show{opacity:1;transform:translateY(0)}
-@media(max-width:600px){.fg{grid-template-columns:1fr}.resumo-grid{grid-template-columns:1fr}}
+.toast.ok{background:#0d1f14;border-color:#065f46;color:#34d399}
+.toast.err{background:#1f0d0d;border-color:#7f1d1d;color:#f87171}
+
+/* DIVIDER GOLD */
+.gold-divider{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 24px;opacity:.3}
+
+@media(max-width:600px){.fg{grid-template-columns:1fr}.rgrid{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.header{height:auto;padding:12px 16px}}
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1><i class="ti ti-report-money"></i> Controle de Honorários</h1>
+  <div class="header-brand">
+    <div class="logo-box"><i class="ti ti-report-money"></i></div>
+    <div>
+      <div class="brand-name">CONTABILIDADE DAYMAR</div>
+      <div class="brand-sub">Controle de Honorários</div>
+    </div>
+  </div>
   <div class="header-right">
     <span class="badge-sync" id="badge-sync"><i class="ti ti-cloud"></i> <span id="sync-txt">Carregando...</span></span>
     <button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Novo cliente</button>
@@ -97,12 +165,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 </div>
 
 <div class="container">
+  <div class="gold-divider"></div>
   <div class="metrics" id="metrics"></div>
-  <div class="tabs">
-    <button class="tab on" id="tab-clientes" onclick="setTab('clientes')">Clientes</button>
-    <button class="tab" id="tab-resumo" onclick="setTab('resumo')">Resumo</button>
+  <div class="toolbar">
+    <div class="tabs">
+      <button class="tab on" id="tab-clientes" onclick="setTab('clientes')"><i class="ti ti-users" style="font-size:14px"></i> Clientes</button>
+      <button class="tab" id="tab-resumo" onclick="setTab('resumo')"><i class="ti ti-chart-bar" style="font-size:14px"></i> Resumo</button>
+    </div>
   </div>
   <div id="content"></div>
+</div>
+
+<div class="footer">
+  <div class="footer-contact">
+    <span class="footer-item"><i class="ti ti-phone"></i> (32) 9 9990-7135 / (32) 3413-0053</span>
+    <span class="footer-item"><i class="ti ti-mail"></i> contabilidade.daymar@hotmail.com</span>
+    <span class="footer-item"><i class="ti ti-brand-instagram"></i> @anaamayrink</span>
+  </div>
+  <div class="footer-brand">© Contabilidade Daymar · Compromisso com o seu sucesso</div>
 </div>
 
 <div class="overlay" id="overlay" style="display:none" onclick="if(event.target===this)closeModal()">
@@ -112,104 +192,62 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 <div class="toast" id="toast"></div>
 
 <script>
-let clientes = [];
-let tab = 'clientes';
-let search = '';
-let editId = null;
-const REGIMES = ['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
-const STATUS = ['Pendente','Pago','Atrasado'];
+let clientes=[];
+let tab='clientes';
+let search='';
+let editId=null;
+const REGIMES=['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
+const STATUS=['Pendente','Pago','Atrasado'];
 
-function fmt(v){
-  if(!v && v!==0) return '—';
-  return 'R$ '+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
-}
+function fmt(v){if(!v&&v!==0)return'—';return'R$ '+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});}
 function ini(n){return((n||'?').split(' ').slice(0,2).map(w=>w[0]).join('')).toUpperCase();}
 function total(c){return(parseFloat(c.honorario)||0)+(parseFloat(c.apice)||0);}
 function dec(c){return c.decimo==='Sim'?(parseFloat(c.honorario)||0)/12:0;}
 
 function toast(msg,ok=true){
   const t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.background=ok?'#1F3864':'#c0392b';
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+  t.textContent=msg;t.className='toast show '+(ok?'ok':'err');
+  setTimeout(()=>t.className='toast',3000);
 }
-function syncBadge(status){
-  const b=document.getElementById('badge-sync');
-  const t=document.getElementById('sync-txt');
-  if(status==='ok'){b.className='badge-sync ok';t.textContent='Sincronizado';}
-  else if(status==='err'){b.className='badge-sync err';t.textContent='Erro de conexão';}
-  else{b.className='badge-sync';t.textContent='Sincronizando...';}
+function syncBadge(s){
+  const b=document.getElementById('badge-sync'),t=document.getElementById('sync-txt');
+  b.className='badge-sync'+(s==='ok'?' ok':s==='err'?' err':'');
+  t.textContent=s==='ok'?'Sincronizado':s==='err'?'Erro de conexão':'Sincronizando...';
 }
 
 async function loadData(){
   syncBadge('loading');
-  try{
-    const r=await fetch('/api/clientes');
-    const data=await r.json();
-    clientes=Array.isArray(data)?data:[];
-    syncBadge('ok');
-  }catch(e){
-    syncBadge('err');
-    toast('Erro ao carregar dados',false);
-  }
+  try{const r=await fetch('/api/clientes');const d=await r.json();clientes=Array.isArray(d)?d:[];syncBadge('ok');}
+  catch{syncBadge('err');toast('Erro ao carregar dados',false);}
   render();
 }
+async function apiPost(b){const r=await fetch('/api/clientes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return r.json();}
+async function apiPut(b){const r=await fetch('/api/clientes',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)});return r.json();}
+async function apiDelete(id){await fetch('/api/clientes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});}
 
-async function apiPost(body){
-  const r=await fetch('/api/clientes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  return r.json();
-}
-async function apiPut(body){
-  const r=await fetch('/api/clientes',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
-  return r.json();
-}
-async function apiDelete(id){
-  await fetch('/api/clientes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
-}
-
-function grupos(list){
-  const m={};
-  list.forEach(c=>{const g=c.grupo||'Sem grupo';if(!m[g])m[g]=[];m[g].push(c);});
-  return m;
-}
+function grupos(list){const m={};list.forEach(c=>{const g=c.grupo||'Sem grupo';if(!m[g])m[g]=[];m[g].push(c);});return m;}
 
 function renderMetrics(){
-  const m=clientes.reduce((a,c)=>{
-    a.tm+=total(c);a.ta+=(parseFloat(c.apice)||0);
-    if(c.status==='Pago')a.pg++;else if(c.status==='Atrasado')a.at++;else a.pe++;
-    return a;
-  },{tm:0,ta:0,pg:0,pe:0,at:0});
+  const m=clientes.reduce((a,c)=>{a.tm+=total(c);a.ta+=(parseFloat(c.apice)||0);if(c.status==='Pago')a.pg++;else if(c.status==='Atrasado')a.at++;else a.pe++;return a;},{tm:0,ta:0,pg:0,pe:0,at:0});
   document.getElementById('metrics').innerHTML=`
-    <div class="mc"><div class="mc-l">Total mensal</div><div class="mc-v blue">${fmt(m.tm)}</div></div>
-    <div class="mc"><div class="mc-l">Cons. Ápice</div><div class="mc-v amber">${fmt(m.ta)}</div></div>
-    <div class="mc"><div class="mc-l">Pagos</div><div class="mc-v green">${m.pg}</div></div>
+    <div class="mc"><div class="mc-l">Total mensal</div><div class="mc-v gold">${fmt(m.tm)}</div></div>
+    <div class="mc"><div class="mc-l">Cons. Ápice</div><div class="mc-v gold">${fmt(m.ta)}</div></div>
+    <div class="mc c-green"><div class="mc-l">Pagos</div><div class="mc-v green">${m.pg}</div></div>
     <div class="mc"><div class="mc-l">Pendentes</div><div class="mc-v amber">${m.pe}</div></div>
-    <div class="mc"><div class="mc-l">Atrasados</div><div class="mc-v red">${m.at}</div></div>
-    <div class="mc"><div class="mc-l">Clientes</div><div class="mc-v">${clientes.length}</div></div>`;
+    <div class="mc c-red"><div class="mc-l">Atrasados</div><div class="mc-v red">${m.at}</div></div>
+    <div class="mc c-gray"><div class="mc-l">Clientes</div><div class="mc-v">${clientes.length}</div></div>`;
 }
 
 function renderClientes(){
-  const fil=clientes.filter(c=>{
-    if(!search)return true;
-    const q=search.toLowerCase();
-    return(c.nome||'').toLowerCase().includes(q)||(c.razao||'').toLowerCase().includes(q)||(c.grupo||'').toLowerCase().includes(q);
-  });
-  const gr=grupos(fil);
-  const keys=Object.keys(gr);
-  if(keys.length===0){
-    return`<div class="empty"><i class="ti ti-users"></i>Nenhum cliente cadastrado.<br><br><button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Adicionar primeiro cliente</button></div>`;
-  }
-  return keys.map(g=>`
-    <div class="group-block">
-      <div class="group-title"><i class="ti ti-building" style="font-size:12px"></i>${g} <span style="font-weight:400;opacity:.6">(${gr[g].length})</span></div>
-      ${gr[g].map(c=>renderCard(c)).join('')}
-    </div>`).join('');
+  const fil=clientes.filter(c=>{if(!search)return true;const q=search.toLowerCase();return(c.nome||'').toLowerCase().includes(q)||(c.razao||'').toLowerCase().includes(q)||(c.grupo||'').toLowerCase().includes(q);});
+  const gr=grupos(fil);const keys=Object.keys(gr);
+  if(keys.length===0)return`<div class="empty"><i class="ti ti-users"></i><p>Nenhum cliente cadastrado ainda.</p><button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Adicionar primeiro cliente</button></div>`;
+  return keys.map(g=>`<div class="group-block"><div class="group-title"><i class="ti ti-building" style="font-size:12px;color:var(--gold)"></i>${g} <span style="opacity:.5;font-weight:400">(${gr[g].length})</span></div>${gr[g].map(c=>renderCard(c)).join('')}</div>`).join('');
 }
 
 function renderCard(c){
   const t=total(c),d=dec(c);
-  const stClass=c.status==='Pago'?'tag-pago':c.status==='Atrasado'?'tag-atrasado':'tag-pendente';
+  const stc=c.status==='Pago'?'tag-pago':c.status==='Atrasado'?'tag-atrasado':'tag-pendente';
   return`<div class="card">
     <div class="card-head">
       <div class="avatar">${ini(c.nome)}</div>
@@ -219,7 +257,7 @@ function renderCard(c){
         <div class="tags">
           ${c.regime?`<span class="tag tag-regime">${c.regime}</span>`:''}
           ${c.grupo&&c.grupo!=='Sem grupo'?`<span class="tag tag-grupo"><i class="ti ti-building" style="font-size:10px"></i> ${c.grupo}</span>`:''}
-          <span class="tag ${stClass}">${c.status||'Pendente'}</span>
+          <span class="tag ${stc}">${c.status||'Pendente'}</span>
         </div>
       </div>
       <div class="card-actions">
@@ -228,12 +266,12 @@ function renderCard(c){
       </div>
     </div>
     <div class="card-vals">
-      <div><div class="val-l">Honorário</div><div class="val-v blue">${fmt(c.honorario)}</div></div>
+      <div><div class="val-l">Honorário</div><div class="val-v gold">${fmt(c.honorario)}</div></div>
       ${c.apice?`<div><div class="val-l">Cons. Ápice</div><div class="val-v amber">${fmt(c.apice)}</div></div>`:''}
       <div><div class="val-l">Total mensal</div><div class="val-v green">${fmt(t)}</div></div>
       ${d>0?`<div><div class="val-l">13° (mensal)</div><div class="val-v">${fmt(d)}</div></div>`:''}
     </div>
-    ${c.pix?`<div class="pix-line"><i class="ti ti-key" style="font-size:13px"></i>${c.pix}</div>`:''}
+    ${c.pix?`<div class="pix-line"><i class="ti ti-key" style="font-size:13px;color:var(--gold)"></i>${c.pix}</div>`:''}
     ${c.obs?`<div class="obs-line">${c.obs}</div>`:''}
   </div>`;
 }
@@ -243,41 +281,32 @@ function renderResumo(){
   const tAp=clientes.reduce((s,c)=>s+(parseFloat(c.apice)||0),0);
   const tDec=clientes.reduce((s,c)=>s+dec(c),0);
   const byStatus={Pago:{n:0,v:0},Pendente:{n:0,v:0},Atrasado:{n:0,v:0}};
-  const byReg={};
-  const byGrp=grupos(clientes);
+  const byReg={};const byGrp=grupos(clientes);
   clientes.forEach(c=>{
-    const st=c.status||'Pendente';
-    if(byStatus[st]){byStatus[st].n++;byStatus[st].v+=total(c);}
-    const rg=c.regime||'Sem regime';
-    byReg[rg]=(byReg[rg]||0)+(parseFloat(c.honorario)||0);
+    const st=c.status||'Pendente';if(byStatus[st]){byStatus[st].n++;byStatus[st].v+=total(c);}
+    const rg=c.regime||'Sem regime';byReg[rg]=(byReg[rg]||0)+(parseFloat(c.honorario)||0);
   });
   return`
-  <div class="resumo-grid">
+  <div class="rgrid">
     <div class="rc"><h4><i class="ti ti-calculator"></i> Totais mensais</h4>
-      <div class="rr"><span>Honorários</span><span class="blue" style="font-weight:600">${fmt(tHon)}</span></div>
-      <div class="rr"><span>Consultoria Ápice</span><span class="amber" style="font-weight:600">${fmt(tAp)}</span></div>
-      <div class="rr"><strong>Total mensal</strong><strong class="green">${fmt(tHon+tAp)}</strong></div>
+      <div class="rr"><span>Honorários</span><span style="color:var(--gold2);font-weight:700">${fmt(tHon)}</span></div>
+      <div class="rr"><span>Consultoria Ápice</span><span style="color:var(--gold2);font-weight:700">${fmt(tAp)}</span></div>
+      <div class="rr"><strong>Total mensal</strong><strong style="color:#34d399">${fmt(tHon+tAp)}</strong></div>
     </div>
     <div class="rc"><h4><i class="ti ti-gift"></i> 13° salário</h4>
-      <div class="rr"><span>Clientes com 13°</span><span style="font-weight:600">${clientes.filter(c=>c.decimo==='Sim').length}</span></div>
-      <div class="rr"><span>Estimativa anual</span><span style="font-weight:600">${fmt(tDec*12)}</span></div>
+      <div class="rr"><span>Clientes com 13°</span><strong>${clientes.filter(c=>c.decimo==='Sim').length}</strong></div>
+      <div class="rr"><span>Estimativa anual</span><strong style="color:var(--gold2)">${fmt(tDec*12)}</strong></div>
     </div>
   </div>
   <div class="rc" style="margin-bottom:12px"><h4><i class="ti ti-circle-check"></i> Status de pagamento</h4>
-    ${['Pago','Pendente','Atrasado'].map(st=>{
-      const cl=st==='Pago'?'tag-pago':st==='Atrasado'?'tag-atrasado':'tag-pendente';
-      const d=byStatus[st];
-      return`<div class="rr"><span><span class="tag ${cl}">${st}</span></span><span>${d.n} clientes — ${fmt(d.v)}</span></div>`;
-    }).join('')}
+    ${['Pago','Pendente','Atrasado'].map(st=>{const cl=st==='Pago'?'tag-pago':st==='Atrasado'?'tag-atrasado':'tag-pendente';const d=byStatus[st];return`<div class="rr"><span><span class="tag ${cl}">${st}</span></span><span>${d.n} clientes — ${fmt(d.v)}</span></div>`;}).join('')}
   </div>
-  <div class="resumo-grid">
+  <div class="rgrid">
     <div class="rc"><h4><i class="ti ti-building-community"></i> Por grupo</h4>
-      ${Object.keys(byGrp).map(g=>{const t=byGrp[g].reduce((s,c)=>s+total(c),0);return`<div class="rr"><span>${g} <span style="color:#aaa;font-size:11px">(${byGrp[g].length})</span></span><span>${fmt(t)}</span></div>`;}).join('')||'<div style="color:#aaa;font-size:13px;padding:6px 0">Nenhum dado</div>'}
+      ${Object.keys(byGrp).map(g=>{const t=byGrp[g].reduce((s,c)=>s+total(c),0);return`<div class="rr"><span>${g} <span style="color:var(--text3);font-size:11px">(${byGrp[g].length})</span></span><span style="color:var(--gold2)">${fmt(t)}</span></div>`;}).join('')||'<div style="color:var(--text3);font-size:13px;padding:6px 0">Nenhum dado</div>'}
     </div>
     <div class="rc"><h4><i class="ti ti-chart-pie"></i> Por regime tributário</h4>
-      <div class="reg-chips">
-        ${Object.keys(byReg).map(r=>`<div class="reg-chip"><div class="reg-chip-l">${r}</div><div class="reg-chip-v">${fmt(byReg[r])}</div></div>`).join('')||'<div style="color:#aaa;font-size:13px">Nenhum dado</div>'}
-      </div>
+      <div class="reg-chips">${Object.keys(byReg).map(r=>`<div class="reg-chip"><div class="reg-chip-l">${r}</div><div class="reg-chip-v">${fmt(byReg[r])}</div></div>`).join('')||'<div style="color:var(--text3);font-size:13px">Nenhum dado</div>'}</div>
     </div>
   </div>`;
 }
@@ -286,13 +315,8 @@ function render(){
   renderMetrics();
   const c=document.getElementById('content');
   if(tab==='clientes'){
-    c.innerHTML=`
-      <div class="section-bar"><h2>Empresas cadastradas</h2></div>
-      <div class="search-bar"><input type="text" placeholder="Buscar por nome, empresa ou grupo..." value="${search}" oninput="search=this.value;render()"></div>
-      ${renderClientes()}`;
-  } else {
-    c.innerHTML=renderResumo();
-  }
+    c.innerHTML=`<div class="search-wrap"><input type="text" placeholder="Buscar por nome, empresa ou grupo..." value="${search}" oninput="search=this.value;render()"></div>${renderClientes()}`;
+  }else{c.innerHTML=renderResumo();}
 }
 
 function setTab(t){
@@ -303,12 +327,10 @@ function setTab(t){
 }
 
 function openModal(id){
-  editId=id;
-  const c=id?clientes.find(x=>x.id===id)||{}:{};
-  const isEdit=!!id;
+  editId=id;const c=id?clientes.find(x=>x.id===id)||{}:{};const isEdit=!!id;
   const gList=[...new Set(clientes.map(x=>x.grupo).filter(Boolean))];
   document.getElementById('modal').innerHTML=`
-    <h3>${isEdit?'Editar cliente':'Novo cliente'}</h3>
+    <h3><i class="ti ti-${isEdit?'edit':'user-plus'}"></i> ${isEdit?'Editar cliente':'Novo cliente'}</h3>
     <div class="fg">
       <div class="f"><label>Nome do cliente *</label><input id="f_nome" type="text" value="${c.nome||''}" placeholder="Ex: João Silva"></div>
       <div class="f"><label>Razão social / empresa *</label><input id="f_razao" type="text" value="${c.razao||''}" placeholder="Ex: Silva LTDA"></div>
@@ -329,52 +351,26 @@ function openModal(id){
   document.getElementById('f_nome').focus();
 }
 
-function closeModal(){
-  document.getElementById('overlay').style.display='none';
-  editId=null;
-}
+function closeModal(){document.getElementById('overlay').style.display='none';editId=null;}
 
 async function salvar(){
   const nome=(document.getElementById('f_nome').value||'').trim();
   const razao=(document.getElementById('f_razao').value||'').trim();
   if(!nome||!razao){alert('Preencha o nome e a razão social.');return;}
-  const d={nome,razao,
-    grupo:document.getElementById('f_grupo').value.trim(),
-    regime:document.getElementById('f_reg').value,
-    honorario:document.getElementById('f_hon').value||null,
-    apice:document.getElementById('f_ap').value||null,
-    decimo:document.getElementById('f_dec').value,
-    status:document.getElementById('f_st').value,
-    pix:document.getElementById('f_pix').value.trim(),
-    obs:document.getElementById('f_obs').value.trim()};
+  const d={nome,razao,grupo:document.getElementById('f_grupo').value.trim(),regime:document.getElementById('f_reg').value,honorario:document.getElementById('f_hon').value||null,apice:document.getElementById('f_ap').value||null,decimo:document.getElementById('f_dec').value,status:document.getElementById('f_st').value,pix:document.getElementById('f_pix').value.trim(),obs:document.getElementById('f_obs').value.trim()};
   syncBadge('loading');
   try{
-    if(editId){
-      await apiPut({id:editId,...d});
-      toast('Cliente atualizado!');
-    } else {
-      await apiPost(d);
-      toast('Cliente cadastrado!');
-    }
-    closeModal();
-    await loadData();
-  }catch(e){
-    syncBadge('err');
-    toast('Erro ao salvar',false);
-  }
+    if(editId){await apiPut({id:editId,...d});toast('Cliente atualizado!');}
+    else{await apiPost(d);toast('Cliente cadastrado!');}
+    closeModal();await loadData();
+  }catch{syncBadge('err');toast('Erro ao salvar',false);}
 }
 
 async function excluir(id,nome){
-  if(!confirm(`Excluir "${nome}"? Esta ação não pode ser desfeita.`))return;
+  if(!confirm(`Excluir "${nome}"?`))return;
   syncBadge('loading');
-  try{
-    await apiDelete(id);
-    toast('Cliente excluído');
-    await loadData();
-  }catch(e){
-    syncBadge('err');
-    toast('Erro ao excluir',false);
-  }
+  try{await apiDelete(id);toast('Cliente excluído');await loadData();}
+  catch{syncBadge('err');toast('Erro ao excluir',false);}
 }
 
 loadData();
