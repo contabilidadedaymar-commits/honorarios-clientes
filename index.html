@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Controle de Honorários</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f4f6f9;color:#1a1a2e;min-height:100vh}
+.header{background:#1F3864;color:#fff;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.header h1{font-size:18px;font-weight:600;display:flex;align-items:center;gap:8px}
+.header-right{display:flex;align-items:center;gap:10px}
+.badge-sync{font-size:12px;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,.15);display:flex;align-items:center;gap:5px}
+.badge-sync.ok{background:rgba(29,158,117,.3)}
+.badge-sync.err{background:rgba(220,53,69,.3)}
+.container{max-width:1100px;margin:0 auto;padding:20px 16px}
+.tabs{display:flex;gap:4px;background:#fff;border:1px solid #dde3ee;border-radius:10px;padding:4px;margin-bottom:20px;width:fit-content}
+.tab{padding:7px 18px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:none;background:transparent;color:#666;transition:all .15s}
+.tab.on{background:#1F3864;color:#fff}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.mc{background:#fff;border:1px solid #dde3ee;border-radius:10px;padding:14px 16px}
+.mc-l{font-size:11px;color:#888;margin-bottom:5px;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
+.mc-v{font-size:22px;font-weight:600}
+.blue{color:#185FA5}.green{color:#1D9E75}.amber{color:#BA7517}.red{color:#c0392b}
+.section-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.section-bar h2{font-size:15px;font-weight:600}
+.btn{padding:8px 15px;border-radius:8px;border:1px solid #ccd0da;background:#fff;color:#333;font-size:13px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all .15s;font-family:inherit}
+.btn:hover{background:#f0f2f7;border-color:#aab0be}
+.btn-primary{background:#1F3864;color:#fff;border-color:#1F3864}
+.btn-primary:hover{background:#162a4e}
+.btn-danger{color:#c0392b;border-color:#f5c0c0}
+.btn-danger:hover{background:#fff0f0}
+.btn-sm{padding:5px 10px;font-size:12px}
+.search-bar{margin-bottom:14px}
+.search-bar input{width:100%;max-width:420px;padding:8px 12px;border:1px solid #dde3ee;border-radius:8px;font-size:13px;background:#fff;font-family:inherit}
+.group-block{margin-bottom:1.5rem}
+.group-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid #eaecf2;display:flex;align-items:center;gap:5px}
+.card{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:14px 16px;margin-bottom:10px;transition:box-shadow .15s}
+.card:hover{box-shadow:0 2px 12px rgba(0,0,0,.07)}
+.card-head{display:flex;align-items:flex-start;gap:12px}
+.avatar{width:40px;height:40px;border-radius:50%;background:#dbeafe;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#1e40af;flex-shrink:0}
+.card-info{flex:1;min-width:0}
+.card-nome{font-size:14px;font-weight:600;margin-bottom:2px}
+.card-razao{font-size:12px;color:#666;margin-bottom:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:11px;padding:2px 8px;border-radius:100px;background:#f0f2f7;color:#555;border:1px solid #dde3ee}
+.tag-regime{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.tag-grupo{background:#ede9fe;color:#5b21b6;border-color:#ddd6fe}
+.tag-pago{background:#d1fae5;color:#065f46}
+.tag-pendente{background:#fef3c7;color:#92400e}
+.tag-atrasado{background:#fee2e2;color:#991b1b}
+.card-actions{display:flex;gap:6px;flex-shrink:0}
+.card-vals{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #f0f2f7}
+.val-l{font-size:11px;color:#999;margin-bottom:2px}
+.val-v{font-size:13px;font-weight:600}
+.pix-line{margin-top:8px;font-size:12px;color:#666;display:flex;align-items:center;gap:5px}
+.obs-line{margin-top:8px;font-size:12px;color:#888;border-top:1px solid #f0f2f7;padding-top:8px}
+.empty{text-align:center;padding:3rem 1rem;color:#aaa}
+.empty i{font-size:36px;display:block;margin-bottom:10px;opacity:.4}
+/* Modal */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:1rem}
+.modal{background:#fff;border-radius:14px;padding:1.5rem;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,.18)}
+.modal h3{font-size:16px;font-weight:600;margin-bottom:1.25rem}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label{font-size:11px;color:#666;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.f input,.f select,.f textarea{padding:8px 10px;border:1px solid #dde3ee;border-radius:8px;font-size:13px;font-family:inherit;color:#1a1a2e;background:#fff}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:#185FA5;box-shadow:0 0 0 3px rgba(24,95,165,.1)}
+.f textarea{resize:vertical;min-height:60px}
+.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1.25rem;padding-top:1rem;border-top:1px solid #eee}
+/* Resumo */
+.resumo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.rc{background:#fff;border:1px solid #dde3ee;border-radius:12px;padding:14px 16px}
+.rc h4{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;color:#444}
+.rr{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid #f4f5f7;font-size:13px}
+.rr:last-child{border:none}
+.rr strong{font-weight:600}
+.reg-chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-top:8px}
+.reg-chip{background:#f4f6f9;border-radius:8px;padding:8px 12px}
+.reg-chip-l{font-size:11px;color:#888;margin-bottom:3px}
+.reg-chip-v{font-size:13px;font-weight:600}
+/* Toast */
+.toast{position:fixed;bottom:20px;right:20px;background:#1F3864;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;opacity:0;transform:translateY(10px);transition:all .3s}
+.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:600px){.fg{grid-template-columns:1fr}.resumo-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1><i class="ti ti-report-money"></i> Controle de Honorários</h1>
+  <div class="header-right">
+    <span class="badge-sync" id="badge-sync"><i class="ti ti-cloud"></i> <span id="sync-txt">Carregando...</span></span>
+    <button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Novo cliente</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="metrics" id="metrics"></div>
+  <div class="tabs">
+    <button class="tab on" id="tab-clientes" onclick="setTab('clientes')">Clientes</button>
+    <button class="tab" id="tab-resumo" onclick="setTab('resumo')">Resumo</button>
+  </div>
+  <div id="content"></div>
+</div>
+
+<div class="overlay" id="overlay" style="display:none" onclick="if(event.target===this)closeModal()">
+  <div class="modal" id="modal"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+let clientes = [];
+let tab = 'clientes';
+let search = '';
+let editId = null;
+const REGIMES = ['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
+const STATUS = ['Pendente','Pago','Atrasado'];
+
+function fmt(v){
+  if(!v && v!==0) return '—';
+  return 'R$ '+parseFloat(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function ini(n){return((n||'?').split(' ').slice(0,2).map(w=>w[0]).join('')).toUpperCase();}
+function total(c){return(parseFloat(c.honorario)||0)+(parseFloat(c.apice)||0);}
+function dec(c){return c.decimo==='Sim'?(parseFloat(c.honorario)||0)/12:0;}
+
+function toast(msg,ok=true){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.style.background=ok?'#1F3864':'#c0392b';
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+function syncBadge(status){
+  const b=document.getElementById('badge-sync');
+  const t=document.getElementById('sync-txt');
+  if(status==='ok'){b.className='badge-sync ok';t.textContent='Sincronizado';}
+  else if(status==='err'){b.className='badge-sync err';t.textContent='Erro de conexão';}
+  else{b.className='badge-sync';t.textContent='Sincronizando...';}
+}
+
+async function loadData(){
+  syncBadge('loading');
+  try{
+    const r=await fetch('/api/clientes');
+    const data=await r.json();
+    clientes=Array.isArray(data)?data:[];
+    syncBadge('ok');
+  }catch(e){
+    syncBadge('err');
+    toast('Erro ao carregar dados',false);
+  }
+  render();
+}
+
+async function apiPost(body){
+  const r=await fetch('/api/clientes',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
+async function apiPut(body){
+  const r=await fetch('/api/clientes',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  return r.json();
+}
+async function apiDelete(id){
+  await fetch('/api/clientes',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({id})});
+}
+
+function grupos(list){
+  const m={};
+  list.forEach(c=>{const g=c.grupo||'Sem grupo';if(!m[g])m[g]=[];m[g].push(c);});
+  return m;
+}
+
+function renderMetrics(){
+  const m=clientes.reduce((a,c)=>{
+    a.tm+=total(c);a.ta+=(parseFloat(c.apice)||0);
+    if(c.status==='Pago')a.pg++;else if(c.status==='Atrasado')a.at++;else a.pe++;
+    return a;
+  },{tm:0,ta:0,pg:0,pe:0,at:0});
+  document.getElementById('metrics').innerHTML=`
+    <div class="mc"><div class="mc-l">Total mensal</div><div class="mc-v blue">${fmt(m.tm)}</div></div>
+    <div class="mc"><div class="mc-l">Cons. Ápice</div><div class="mc-v amber">${fmt(m.ta)}</div></div>
+    <div class="mc"><div class="mc-l">Pagos</div><div class="mc-v green">${m.pg}</div></div>
+    <div class="mc"><div class="mc-l">Pendentes</div><div class="mc-v amber">${m.pe}</div></div>
+    <div class="mc"><div class="mc-l">Atrasados</div><div class="mc-v red">${m.at}</div></div>
+    <div class="mc"><div class="mc-l">Clientes</div><div class="mc-v">${clientes.length}</div></div>`;
+}
+
+function renderClientes(){
+  const fil=clientes.filter(c=>{
+    if(!search)return true;
+    const q=search.toLowerCase();
+    return(c.nome||'').toLowerCase().includes(q)||(c.razao||'').toLowerCase().includes(q)||(c.grupo||'').toLowerCase().includes(q);
+  });
+  const gr=grupos(fil);
+  const keys=Object.keys(gr);
+  if(keys.length===0){
+    return`<div class="empty"><i class="ti ti-users"></i>Nenhum cliente cadastrado.<br><br><button class="btn btn-primary" onclick="openModal(null)"><i class="ti ti-plus"></i> Adicionar primeiro cliente</button></div>`;
+  }
+  return keys.map(g=>`
+    <div class="group-block">
+      <div class="group-title"><i class="ti ti-building" style="font-size:12px"></i>${g} <span style="font-weight:400;opacity:.6">(${gr[g].length})</span></div>
+      ${gr[g].map(c=>renderCard(c)).join('')}
+    </div>`).join('');
+}
+
+function renderCard(c){
+  const t=total(c),d=dec(c);
+  const stClass=c.status==='Pago'?'tag-pago':c.status==='Atrasado'?'tag-atrasado':'tag-pendente';
+  return`<div class="card">
+    <div class="card-head">
+      <div class="avatar">${ini(c.nome)}</div>
+      <div class="card-info">
+        <div class="card-nome">${c.nome||'—'}</div>
+        <div class="card-razao">${c.razao||'—'}</div>
+        <div class="tags">
+          ${c.regime?`<span class="tag tag-regime">${c.regime}</span>`:''}
+          ${c.grupo&&c.grupo!=='Sem grupo'?`<span class="tag tag-grupo"><i class="ti ti-building" style="font-size:10px"></i> ${c.grupo}</span>`:''}
+          <span class="tag ${stClass}">${c.status||'Pendente'}</span>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn btn-sm" onclick="openModal('${c.id}')" title="Editar"><i class="ti ti-edit"></i></button>
+        <button class="btn btn-sm btn-danger" onclick="excluir('${c.id}','${(c.nome||'').replace(/'/g,'')}')"><i class="ti ti-trash"></i></button>
+      </div>
+    </div>
+    <div class="card-vals">
+      <div><div class="val-l">Honorário</div><div class="val-v blue">${fmt(c.honorario)}</div></div>
+      ${c.apice?`<div><div class="val-l">Cons. Ápice</div><div class="val-v amber">${fmt(c.apice)}</div></div>`:''}
+      <div><div class="val-l">Total mensal</div><div class="val-v green">${fmt(t)}</div></div>
+      ${d>0?`<div><div class="val-l">13° (mensal)</div><div class="val-v">${fmt(d)}</div></div>`:''}
+    </div>
+    ${c.pix?`<div class="pix-line"><i class="ti ti-key" style="font-size:13px"></i>${c.pix}</div>`:''}
+    ${c.obs?`<div class="obs-line">${c.obs}</div>`:''}
+  </div>`;
+}
+
+function renderResumo(){
+  const tHon=clientes.reduce((s,c)=>s+(parseFloat(c.honorario)||0),0);
+  const tAp=clientes.reduce((s,c)=>s+(parseFloat(c.apice)||0),0);
+  const tDec=clientes.reduce((s,c)=>s+dec(c),0);
+  const byStatus={Pago:{n:0,v:0},Pendente:{n:0,v:0},Atrasado:{n:0,v:0}};
+  const byReg={};
+  const byGrp=grupos(clientes);
+  clientes.forEach(c=>{
+    const st=c.status||'Pendente';
+    if(byStatus[st]){byStatus[st].n++;byStatus[st].v+=total(c);}
+    const rg=c.regime||'Sem regime';
+    byReg[rg]=(byReg[rg]||0)+(parseFloat(c.honorario)||0);
+  });
+  return`
+  <div class="resumo-grid">
+    <div class="rc"><h4><i class="ti ti-calculator"></i> Totais mensais</h4>
+      <div class="rr"><span>Honorários</span><span class="blue" style="font-weight:600">${fmt(tHon)}</span></div>
+      <div class="rr"><span>Consultoria Ápice</span><span class="amber" style="font-weight:600">${fmt(tAp)}</span></div>
+      <div class="rr"><strong>Total mensal</strong><strong class="green">${fmt(tHon+tAp)}</strong></div>
+    </div>
+    <div class="rc"><h4><i class="ti ti-gift"></i> 13° salário</h4>
+      <div class="rr"><span>Clientes com 13°</span><span style="font-weight:600">${clientes.filter(c=>c.decimo==='Sim').length}</span></div>
+      <div class="rr"><span>Estimativa anual</span><span style="font-weight:600">${fmt(tDec*12)}</span></div>
+    </div>
+  </div>
+  <div class="rc" style="margin-bottom:12px"><h4><i class="ti ti-circle-check"></i> Status de pagamento</h4>
+    ${['Pago','Pendente','Atrasado'].map(st=>{
+      const cl=st==='Pago'?'tag-pago':st==='Atrasado'?'tag-atrasado':'tag-pendente';
+      const d=byStatus[st];
+      return`<div class="rr"><span><span class="tag ${cl}">${st}</span></span><span>${d.n} clientes — ${fmt(d.v)}</span></div>`;
+    }).join('')}
+  </div>
+  <div class="resumo-grid">
+    <div class="rc"><h4><i class="ti ti-building-community"></i> Por grupo</h4>
+      ${Object.keys(byGrp).map(g=>{const t=byGrp[g].reduce((s,c)=>s+total(c),0);return`<div class="rr"><span>${g} <span style="color:#aaa;font-size:11px">(${byGrp[g].length})</span></span><span>${fmt(t)}</span></div>`;}).join('')||'<div style="color:#aaa;font-size:13px;padding:6px 0">Nenhum dado</div>'}
+    </div>
+    <div class="rc"><h4><i class="ti ti-chart-pie"></i> Por regime tributário</h4>
+      <div class="reg-chips">
+        ${Object.keys(byReg).map(r=>`<div class="reg-chip"><div class="reg-chip-l">${r}</div><div class="reg-chip-v">${fmt(byReg[r])}</div></div>`).join('')||'<div style="color:#aaa;font-size:13px">Nenhum dado</div>'}
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(){
+  renderMetrics();
+  const c=document.getElementById('content');
+  if(tab==='clientes'){
+    c.innerHTML=`
+      <div class="section-bar"><h2>Empresas cadastradas</h2></div>
+      <div class="search-bar"><input type="text" placeholder="Buscar por nome, empresa ou grupo..." value="${search}" oninput="search=this.value;render()"></div>
+      ${renderClientes()}`;
+  } else {
+    c.innerHTML=renderResumo();
+  }
+}
+
+function setTab(t){
+  tab=t;
+  document.getElementById('tab-clientes').className='tab'+(t==='clientes'?' on':'');
+  document.getElementById('tab-resumo').className='tab'+(t==='resumo'?' on':'');
+  render();
+}
+
+function openModal(id){
+  editId=id;
+  const c=id?clientes.find(x=>x.id===id)||{}:{};
+  const isEdit=!!id;
+  const gList=[...new Set(clientes.map(x=>x.grupo).filter(Boolean))];
+  document.getElementById('modal').innerHTML=`
+    <h3>${isEdit?'Editar cliente':'Novo cliente'}</h3>
+    <div class="fg">
+      <div class="f"><label>Nome do cliente *</label><input id="f_nome" type="text" value="${c.nome||''}" placeholder="Ex: João Silva"></div>
+      <div class="f"><label>Razão social / empresa *</label><input id="f_razao" type="text" value="${c.razao||''}" placeholder="Ex: Silva LTDA"></div>
+      <div class="f"><label>Grupo / holding</label><input id="f_grupo" type="text" value="${c.grupo||''}" placeholder="Ex: Grupo Silva" list="glist"><datalist id="glist">${gList.map(g=>`<option value="${g}">`).join('')}</datalist></div>
+      <div class="f"><label>Regime tributário</label><select id="f_reg"><option value="">Selecione</option>${REGIMES.map(r=>`<option${c.regime===r?' selected':''}>${r}</option>`).join('')}</select></div>
+      <div class="f"><label>Honorário mensal (R$)</label><input id="f_hon" type="number" step="0.01" min="0" value="${c.honorario||''}" placeholder="0,00"></div>
+      <div class="f"><label>Consultoria Ápice (R$)</label><input id="f_ap" type="number" step="0.01" min="0" value="${c.apice||''}" placeholder="0,00"></div>
+      <div class="f"><label>Paga 13°?</label><select id="f_dec"><option value="Não"${c.decimo!=='Sim'?' selected':''}>Não</option><option value="Sim"${c.decimo==='Sim'?' selected':''}>Sim</option></select></div>
+      <div class="f"><label>Status de pagamento</label><select id="f_st">${STATUS.map(s=>`<option${c.status===s?' selected':''}>${s}</option>`).join('')}</select></div>
+      <div class="f" style="grid-column:1/-1"><label>Chave PIX</label><input id="f_pix" type="text" value="${c.pix||''}" placeholder="CPF, CNPJ, e-mail, telefone ou chave aleatória"></div>
+      <div class="f" style="grid-column:1/-1"><label>Observações</label><textarea id="f_obs">${c.obs||''}</textarea></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-primary" onclick="salvar()"><i class="ti ti-device-floppy"></i> ${isEdit?'Salvar alterações':'Cadastrar cliente'}</button>
+    </div>`;
+  document.getElementById('overlay').style.display='flex';
+  document.getElementById('f_nome').focus();
+}
+
+function closeModal(){
+  document.getElementById('overlay').style.display='none';
+  editId=null;
+}
+
+async function salvar(){
+  const nome=(document.getElementById('f_nome').value||'').trim();
+  const razao=(document.getElementById('f_razao').value||'').trim();
+  if(!nome||!razao){alert('Preencha o nome e a razão social.');return;}
+  const d={nome,razao,
+    grupo:document.getElementById('f_grupo').value.trim(),
+    regime:document.getElementById('f_reg').value,
+    honorario:document.getElementById('f_hon').value||null,
+    apice:document.getElementById('f_ap').value||null,
+    decimo:document.getElementById('f_dec').value,
+    status:document.getElementById('f_st').value,
+    pix:document.getElementById('f_pix').value.trim(),
+    obs:document.getElementById('f_obs').value.trim()};
+  syncBadge('loading');
+  try{
+    if(editId){
+      await apiPut({id:editId,...d});
+      toast('Cliente atualizado!');
+    } else {
+      await apiPost(d);
+      toast('Cliente cadastrado!');
+    }
+    closeModal();
+    await loadData();
+  }catch(e){
+    syncBadge('err');
+    toast('Erro ao salvar',false);
+  }
+}
+
+async function excluir(id,nome){
+  if(!confirm(`Excluir "${nome}"? Esta ação não pode ser desfeita.`))return;
+  syncBadge('loading');
+  try{
+    await apiDelete(id);
+    toast('Cliente excluído');
+    await loadData();
+  }catch(e){
+    syncBadge('err');
+    toast('Erro ao excluir',false);
+  }
+}
+
+loadData();
+</script>
+</body>
+</html>
