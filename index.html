@@ -223,19 +223,25 @@ function syncBadge(s){const b=document.getElementById('badge-sync'),t=document.g
 async function loadData(){
   syncBadge('loading');
   try{
-    const [rc, rp] = await Promise.all([
-      fetch('/api/clientes').then(r=>r.json()),
-      fetch('/api/pagamentos').then(r=>r.json())
-    ]);
+    const rc = await fetch('/api/clientes').then(r=>r.json());
     clientes = Array.isArray(rc) ? rc : [];
-    // indexar pagamentos por cliente_id
+    syncBadge('ok');
+  }catch(e){
+    console.error('Erro clientes:',e);
+    syncBadge('err');toast('Erro ao carregar clientes',false);
+    render();return;
+  }
+  try{
+    const rp = await fetch('/api/pagamentos').then(r=>r.json());
     pagamentos = {};
     if(Array.isArray(rp)) rp.forEach(p=>{
       if(!pagamentos[p.cliente_id]) pagamentos[p.cliente_id]=[];
       pagamentos[p.cliente_id].push(p);
     });
-    syncBadge('ok');
-  }catch{syncBadge('err');toast('Erro ao carregar dados',false);}
+  }catch(e){
+    console.error('Erro pagamentos:',e);
+    pagamentos = {};
+  }
   render();
 }
 
