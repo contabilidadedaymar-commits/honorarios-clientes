@@ -33,22 +33,24 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') { res.status(200).end(); return; }
 
-  // GET ?cliente_id=xxx  → todos pagamentos do cliente
   if (req.method === 'GET') {
-    const { cliente_id } = req.query;
-    const q = cliente_id ? `${TABLE}?cliente_id=eq.${cliente_id}&order=mes.desc` : `${TABLE}?order=mes.desc`;
-    const data = await supa('GET', q);
+    const data = await supa('GET', `${TABLE}?order=mes.asc`);
     res.status(200).json(Array.isArray(data) ? data : []);
     return;
   }
 
-  // POST { cliente_id, mes, status }   mes = "2025-06"
   if (req.method === 'POST') {
     const body = await readBody(req);
-    // upsert via DELETE + INSERT para simplicidade
     await supa('DELETE', `${TABLE}?cliente_id=eq.${body.cliente_id}&mes=eq.${body.mes}`);
     const data = await supa('POST', TABLE, body);
-    res.status(200).json(data);
+    res.status(200).json(Array.isArray(data) ? data : [data]);
+    return;
+  }
+
+  if (req.method === 'DELETE') {
+    const body = await readBody(req);
+    await supa('DELETE', `${TABLE}?cliente_id=eq.${body.cliente_id}&mes=eq.${body.mes}`);
+    res.status(200).json({ ok: true });
     return;
   }
 
