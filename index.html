@@ -67,7 +67,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .val-edit input:focus{border-color:#c9a84c}
 .val-edit button{padding:3px 8px;font-size:11px;border-radius:5px;border:1px solid #c9a84c;background:linear-gradient(135deg,#5c1010,#7a1818);color:#e8c97a;cursor:pointer;font-family:inherit;white-space:nowrap}
 
-/* MESES 2026 */
+/* MESES DO ANO */
 .meses-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
 .meses-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px}
 .meses-header-left{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--text2)}
@@ -121,6 +121,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .empty i{font-size:40px;display:block;margin-bottom:12px;opacity:.3}
 .empty p{margin-bottom:1.5rem;font-size:14px}
 @media(max-width:700px){.fg{grid-template-columns:1fr}.rgrid{grid-template-columns:1fr}.header{height:auto;padding:12px 16px}}
+
+/* NOTAS FISCAIS */
+.nf-mes-bloco{background:var(--bg2);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.nf-mes-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(135deg,#5c1010,#7a1818);cursor:pointer;user-select:none}
+.nf-mes-titulo{font-size:14px;font-weight:700;color:#e8c97a;display:flex;align-items:center;gap:8px}
+.nf-mes-stats{display:flex;gap:10px;align-items:center}
+.nf-stat{font-size:11px;padding:3px 9px;border-radius:100px;font-weight:600}
+.nf-stat-ok{background:rgba(16,185,129,.25);color:#34d399;border:1px solid rgba(16,185,129,.4)}
+.nf-stat-pend{background:rgba(245,158,11,.25);color:#fbbf24;border:1px solid rgba(245,158,11,.4)}
+.nf-tabela{width:100%;border-collapse:collapse}
+.nf-tabela th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;padding:10px 18px;text-align:left;border-bottom:1px solid var(--border);background:var(--bg3)}
+.nf-tabela td{padding:11px 18px;font-size:13px;border-bottom:1px solid var(--border);color:var(--text2)}
+.nf-tabela tr:last-child td{border-bottom:none}
+.nf-tabela tr:hover td{background:var(--bg3)}
+.nf-btn-emitir{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:1.5px solid;transition:all .15s;font-family:inherit}
+.nf-btn-emitir.pendente{background:#fef3c7;color:#92400e;border-color:#fde68a}
+.nf-btn-emitir.pendente:hover{background:#fde68a}
+.nf-btn-emitir.emitida{background:#d1fae5;color:#065f46;border-color:#a7f3d0;cursor:default}
+.nf-vazio{padding:2rem;text-align:center;color:var(--text3);font-size:13px}
+.nf-seletor-mes{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.nf-seletor-mes label{font-size:13px;font-weight:600;color:var(--text2)}
+.nf-seletor-mes select{padding:7px 12px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--bg2);color:var(--text);font-family:inherit;outline:none}
+.nf-seletor-mes select:focus{border-color:#c9a84c}
+.nf-total-row{background:var(--bg3)!important}
+.nf-total-row td{font-weight:700;color:var(--gold)!important}
 </style>
 </head>
 <body>
@@ -146,6 +171,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
     <div class="tabs">
       <button class="tab on" id="tab-clientes" onclick="setTab('clientes')"><i class="ti ti-users" style="font-size:14px"></i> Clientes</button>
       <button class="tab" id="tab-resumo" onclick="setTab('resumo')"><i class="ti ti-chart-bar" style="font-size:14px"></i> Resumo</button>
+      <button class="tab" id="tab-notas" onclick="setTab('notas')"><i class="ti ti-file-invoice" style="font-size:14px"></i> Notas Fiscais</button>
+    </div>
+    <div id="seletor-ano-wrap" style="display:flex;align-items:center;gap:8px">
+      <button class="btn btn-sm" onclick="mudarAno(-1)" title="Ano anterior"><i class="ti ti-chevron-left"></i></button>
+      <span id="ano-label" style="font-size:14px;font-weight:700;color:var(--gold);min-width:46px;text-align:center">2026</span>
+      <button class="btn btn-sm" id="btn-proximo-ano" onclick="mudarAno(1)" title="Próximo ano"><i class="ti ti-chevron-right"></i></button>
     </div>
   </div>
   <div id="content"></div>
@@ -167,10 +198,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <script>
 const DIA_VENC = 5;
-const ANO = 2026;
+const ANO_ATUAL = new Date().getFullYear();
+let ANO = ANO_ATUAL;
 const MESES_NOME = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
-// Gera todos os 12 meses de 2026
+// Gera todos os 12 meses do ano atual
 function meses2026(){
   return MESES_NOME.map((nome,i)=>({
     key: `${ANO}-${String(i+1).padStart(2,'0')}`,
@@ -178,7 +210,7 @@ function meses2026(){
   }));
 }
 
-let clientes=[], pagamentos={}, tab='clientes', search='', editId=null;
+let clientes=[], pagamentos={}, notas={}, tab='clientes', search='', editId=null, mesFiltro='todos';
 const REGIMES=['Simples Nacional','Lucro Presumido','Lucro Real','MEI','Outro'];
 
 function mesAtualKey(){
@@ -220,6 +252,14 @@ async function loadData(){
       pagamentos[p.cliente_id].push(p);
     });
   }catch(e){console.warn('pagamentos:',e);pagamentos={};}
+  try{
+    const rn=await fetch('/api/notas').then(r=>r.json());
+    notas={};
+    if(Array.isArray(rn)) rn.forEach(n=>{
+      const k=n.cliente_id+'_'+n.mes;
+      notas[k]=n;
+    });
+  }catch(e){console.warn('notas:',e);notas={};}
   render();
 }
 
@@ -303,7 +343,7 @@ function renderMeses(c){
     <div class="meses-header">
       <div class="meses-header-left">
         <i class="ti ti-calendar-month" style="color:var(--gold);font-size:14px"></i>
-        <strong>2026</strong> — Clique no mês para marcar como pago ${vencBadge}
+        <strong>${ANO}</strong> — Clique no mês para marcar como pago ${vencBadge}
       </div>
     </div>
     <div class="meses-grid">${chips}</div>
@@ -418,14 +458,119 @@ function renderResumo(){
   </div>`;
 }
 
+
+async function toggleNota(clienteId, mes, emitida){
+  try{
+    if(emitida){
+      await fetch('/api/notas',{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({cliente_id:clienteId,mes})});
+      delete notas[clienteId+'_'+mes];
+    }else{
+      const c=clientes.find(x=>x.id===clienteId);
+      await fetch('/api/notas',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cliente_id:clienteId,mes,valor:total(c),razao:c.razao,nome:c.nome})});
+      notas[clienteId+'_'+mes]={cliente_id:clienteId,mes,emitida:true};
+    }
+    toast(emitida?'NF desmarcada':'NF marcada como emitida!');
+    render();
+  }catch{toast('Erro ao salvar NF',false);}
+}
+
+function renderNotas(){
+  const MESES_NOME_FULL=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const hoje=new Date();
+  const atualIdx=hoje.getMonth(); // 0-based
+  // apenas meses até o atual no ano corrente
+  const mesesDisponiveis=meses2026().slice(0,atualIdx+1);
+
+  const opcoes=mesesDisponiveis.map((m,i)=>`<option value="${m.key}">${MESES_NOME_FULL[m.idx]}/${ANO}</option>`).join('');
+
+  // clientes que pagaram em cada mês
+  let blocos='';
+  const mesesParaExibir=mesFiltro==='todos'?mesesDisponiveis:mesesDisponiveis.filter(m=>m.key===mesFiltro);
+
+  mesesParaExibir.reverse().forEach(m=>{
+    const pagantes=clientes.filter(c=>{
+      const st=statusMes(c.id,m);
+      return st==='pago';
+    });
+    if(pagantes.length===0) return;
+    const emitidas=pagantes.filter(c=>notas[c.id+'_'+m.key]);
+    const pendentes=pagantes.length-emitidas.length;
+    const totalMes=pagantes.reduce((s,c)=>s+total(c),0);
+
+    const linhas=pagantes.map(c=>{
+      const nfEmitida=!!notas[c.id+'_'+m.key];
+      return `<tr>
+        <td><strong>${c.nome||'—'}</strong><br><span style="font-size:11px;color:var(--text3)">${c.razao||''}</span></td>
+        <td>${c.regime||'—'}</td>
+        <td style="font-weight:700;color:var(--gold)">${fmt(total(c))}</td>
+        <td>
+          <button class="nf-btn-emitir ${nfEmitida?'emitida':'pendente'}" onclick="${nfEmitida?`toggleNota('${c.id}','${m.key}',true)`:`toggleNota('${c.id}','${m.key}',false)`}">
+            ${nfEmitida?'<i class="ti ti-check"></i> NF Emitida':'<i class="ti ti-file-invoice"></i> Emitir NF'}
+          </button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    blocos+=`<div class="nf-mes-bloco">
+      <div class="nf-mes-header">
+        <div class="nf-mes-titulo"><i class="ti ti-calendar-month"></i> ${MESES_NOME_FULL[m.idx]} / ${ANO}</div>
+        <div class="nf-mes-stats">
+          <span class="nf-stat nf-stat-ok"><i class="ti ti-check" style="font-size:10px"></i> ${emitidas.length} emitida${emitidas.length!==1?'s':''}</span>
+          ${pendentes>0?`<span class="nf-stat nf-stat-pend"><i class="ti ti-clock" style="font-size:10px"></i> ${pendentes} pendente${pendentes!==1?'s':''}</span>`:''}
+        </div>
+      </div>
+      <table class="nf-tabela">
+        <thead><tr><th>Cliente / Empresa</th><th>Regime</th><th>Valor</th><th>Nota Fiscal</th></tr></thead>
+        <tbody>
+          ${linhas}
+          <tr class="nf-total-row"><td colspan="2">Total do mês</td><td>${fmt(totalMes)}</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>`;
+  });
+
+  return`<div class="nf-seletor-mes">
+    <label><i class="ti ti-filter" style="font-size:13px;color:var(--gold)"></i> Filtrar por mês:</label>
+    <select onchange="mesFiltro=this.value;render()">
+      <option value="todos">Todos os meses</option>
+      ${opcoes}
+    </select>
+  </div>
+  ${blocos||'<div style="text-align:center;padding:3rem;color:var(--text3)"><i class="ti ti-file-off" style="font-size:36px;display:block;margin-bottom:10px;opacity:.3"></i>Nenhum pagamento registrado ainda.</div>'}`;
+}
+
+function mudarAno(delta){
+  ANO = ANO + delta;
+  // não deixa ir além do ano atual
+  if(ANO > ANO_ATUAL) ANO = ANO_ATUAL;
+  // não deixa ir antes de 2026
+  if(ANO < 2026) ANO = 2026;
+  document.getElementById('ano-label').textContent = ANO;
+  // esconder botão próximo se já estiver no ano atual
+  const btnProx = document.getElementById('btn-proximo-ano');
+  if(btnProx) btnProx.style.opacity = ANO >= ANO_ATUAL ? '0.3' : '1';
+  const btnAnt = document.querySelector('[onclick="mudarAno(-1)"]');
+  if(btnAnt) btnAnt.style.opacity = ANO <= 2026 ? '0.3' : '1';
+  render();
+}
+
 function render(){
   renderMetrics();
   const c=document.getElementById('content');
   if(tab==='clientes'){c.innerHTML=`<div class="search-wrap"><input type="text" placeholder="Buscar por nome, empresa ou grupo..." value="${search}" oninput="search=this.value;render()"></div>${renderClientes()}`;}
+  else if(tab==='notas'){c.innerHTML=renderNotas();}
   else{c.innerHTML=renderResumo();}
 }
 
-function setTab(t){tab=t;document.getElementById('tab-clientes').className='tab'+(t==='clientes'?' on':'');document.getElementById('tab-resumo').className='tab'+(t==='resumo'?' on':'');render();}
+function setTab(t){
+  tab=t;
+  document.getElementById('tab-clientes').className='tab'+(t==='clientes'?' on':'');
+  document.getElementById('tab-resumo').className='tab'+(t==='resumo'?' on':'');
+  document.getElementById('tab-notas').className='tab'+(t==='notas'?' on':'');
+  const wrap=document.getElementById('seletor-ano-wrap');
+  if(wrap) wrap.style.display=(t==='clientes'?'none':'flex');
+  render();
+}
 
 function openModal(id){
   editId=id;const c=id?clientes.find(x=>x.id===id)||{}:{};const isEdit=!!id;
